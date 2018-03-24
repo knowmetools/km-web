@@ -1,5 +1,7 @@
 import Axios from 'axios';
 
+import { API_ROOT } from '../settings';
+
 
 class Account {
   /**
@@ -11,7 +13,7 @@ class Account {
    * @returns {Promise} A promise that resolves to the data received from the verification request.
    */
   static verifyEmail(key, password) {
-    return Axios.post('https://dev.toolbox.knowmetools.com/account/verify-email/', { key, password })
+    return Axios.post(`${API_ROOT}/account/verify-email/`, { key, password })
       .then(response => response.data);
   }
 }
