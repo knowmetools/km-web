@@ -14,13 +14,17 @@ class EmailVerificationContainer extends React.Component {
     }).isRequired,
   };
 
+  state = {
+    isComplete: false,
+  };
+
   /**
    * Event Handlers
    */
 
   handleVerifyEmail = (password) => {
     Account.verifyEmail(this.props.match.params.key, password)
-      .then(data => alert(data))
+      .then(() => this.setState({ isComplete: true }))
       .catch(error => alert(JSON.stringify(error.response.data, null, 2)));
   };
 
@@ -29,6 +33,15 @@ class EmailVerificationContainer extends React.Component {
    */
 
   render() {
+    if (this.state.isComplete) {
+      return (
+        <React.Fragment>
+          <h1>Email Verified</h1>
+          <p>Your email address has been successfully verified.</p>
+        </React.Fragment>
+      );
+    }
+
     return (
       <React.Fragment>
         <h1>Verify your Email Address</h1>
