@@ -18,7 +18,7 @@ class PasswordForm extends React.Component {
    * Event Handlers
    */
 
-  handlePasswordChange = (e) => this.setState({ password: e.target.value });
+  handlePasswordChange = e => this.setState({ password: e.target.value });
 
   handleSubmit = (e) => {
     e.preventDefault();
