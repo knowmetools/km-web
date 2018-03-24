@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 
@@ -5,23 +6,43 @@ import React from 'react';
  * Form for prompting the user for their password.
  */
 class PasswordForm extends React.Component {
-  onSubmit = (e) => {
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  };
+
+  state = {
+    password: '',
+  };
+
+  /**
+   * Event Handlers
+   */
+
+  handlePasswordChange = (e) => this.setState({ password: e.target.value });
+
+  handleSubmit = (e) => {
     e.preventDefault();
 
-    alert("Password form submitted.");
+    this.props.onSubmit(this.state.password);
   }
+
+  /**
+   * Component Methods
+   */
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
-        <label for="password">Password</label>
+      <form onSubmit={this.handleSubmit}>
+        <label htmlFor="password">Password</label>
         <input
-          autocomplete="current-password"
-          autofocus
+          autoComplete="current-password"
+          autoFocus
           id="password"
           name="password"
+          onChange={this.handlePasswordChange}
           required
           type="password"
+          value={this.state.password}
         />
         <button type="submit">Submit</button>
       </form>
