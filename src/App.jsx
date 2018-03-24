@@ -1,8 +1,15 @@
 import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import { EmailVerificationContainer } from './containers';
 
 
 const App = () => (
-  <h1>Hello, World!</h1>
+  <BrowserRouter>
+    <Switch>
+      <Route path="/verify-email/:key" component={EmailVerificationContainer} />
+    </Switch>
+  </BrowserRouter>
 );
 
 
