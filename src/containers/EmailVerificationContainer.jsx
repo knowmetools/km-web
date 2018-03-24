@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { PasswordForm } from '../components';
+import { Account } from '../services';
 
 
 class EmailVerificationContainer extends React.Component {
@@ -13,9 +14,19 @@ class EmailVerificationContainer extends React.Component {
     }).isRequired,
   };
 
+  /**
+   * Event Handlers
+   */
+
   handleVerifyEmail = (password) => {
-    alert("Verifying email address...");
+    Account.verifyEmail(this.props.match.params.key, password)
+      .then(data => alert(data))
+      .catch(error => alert(JSON.stringify(error.response.data, null, 2)));
   };
+
+  /**
+   * Component Methods
+   */
 
   render() {
     return (
