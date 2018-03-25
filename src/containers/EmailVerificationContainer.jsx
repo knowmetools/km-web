@@ -16,6 +16,8 @@ class EmailVerificationContainer extends React.Component {
 
   state = {
     isComplete: false,
+    keyErrors: [],
+    nonFieldErrors: [],
   };
 
   /**
@@ -25,7 +27,24 @@ class EmailVerificationContainer extends React.Component {
   handleVerifyEmail = (password) => {
     Account.verifyEmail(this.props.match.params.key, password)
       .then(() => this.setState({ isComplete: true }))
-      .catch(error => alert(JSON.stringify(error.response.data, null, 2)));
+      .catch((error) => {
+        if (error.response) {
+          const { response } = error;
+
+          if (response.status === 400) {
+            return this.setState({
+              keyErrors: response.data.key || [],
+              nonFieldErrors: response.data.non_field_errors || [],
+            });
+          } else if (response.status >= 500 && response.status < 500) {
+            return this.setState({
+              nonFieldErrors: ['Unable to process your request. Please try again later.'],
+            });
+          }
+        }
+
+        return Promise.reject(error);
+      });
   };
 
   /**
@@ -42,9 +61,17 @@ class EmailVerificationContainer extends React.Component {
       );
     }
 
+    const { keyErrors, nonFieldErrors } = this.state;
+    const formErrors = [...nonFieldErrors, ...keyErrors];
+
     return (
       <React.Fragment>
         <h1>Verify your Email Address</h1>
+        {formErrors.length > 0 && (
+          <ul>
+            {formErrors.map(e => <li key={e}>{e}</li>)}
+          </ul>
+        )}
         <PasswordForm onSubmit={this.handleVerifyEmail} />
       </React.Fragment>
     );
