@@ -5,13 +5,17 @@ This is Know Me's web app. It provides account functionality such as email verif
 
 ## Deployment
 
-### Building the App
+### Deploying to the Internet
 
-To build the app, run the following command:
+The app is hosted on S3 and distributed through CloudFront. There is a script to facilitate the deployment to these platforms. Simply call it with the version of the application you want to deploy checked out.
 
 ```shell
-$ yarn build
+$ git checkout v1.2.3
+$ cd deploy
+$ ./deploy.sh terraform/ default
 ```
+
+The `deploy.sh` script takes two parameters. The first is the relative path from the current directory to the directory containing our Terraform configuration. The second parameter is the name of the Terraform workspace containing the infrastructure that we want to deploy to.
 
 #### Environment Variables
 
