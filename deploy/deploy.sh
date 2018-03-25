@@ -24,7 +24,7 @@ echo "Selecting '$TERRAFORM_WORKSPACE' workspace"
 
 BUCKET=$(
     cd $TERRAFORM_DIR \
-    && terraform workspace select $TERRAFORM_WORKSPACE \
+    && terraform workspace select $TERRAFORM_WORKSPACE >/dev/null \
     && terraform output bucket
 )
 
