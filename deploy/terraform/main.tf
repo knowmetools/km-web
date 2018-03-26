@@ -23,7 +23,7 @@ provider "aws" {
 
 
 data "aws_acm_certificate" "ssl" {
-  domain = "*.app.knowmetools.com"
+  domain = "app.knowmetools.com"
 }
 
 data "aws_route53_zone" "main" {

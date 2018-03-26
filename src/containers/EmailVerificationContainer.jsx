@@ -1,8 +1,25 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import styled from 'styled-components';
 
-import { PasswordForm } from '../components';
+import { Message, PasswordForm } from '../components';
+import { Container } from '../containers';
 import { Account } from '../services';
+
+
+const FormContainer = styled.div`
+  margin: 0 auto;
+  max-width: 25em;
+`;
+
+
+const Heading = styled.h1`
+  color: ${props => props.theme.colors.brandPrimary};
+  font-size: ${props => props.theme.fonts.sizes.headings[1]};
+  line-height: 1.25em;
+  margin: .5em 0;
+  text-align: center;
+`;
 
 
 class EmailVerificationContainer extends React.Component {
@@ -16,6 +33,8 @@ class EmailVerificationContainer extends React.Component {
 
   state = {
     isComplete: false,
+    keyErrors: [],
+    nonFieldErrors: [],
   };
 
   /**
@@ -25,7 +44,24 @@ class EmailVerificationContainer extends React.Component {
   handleVerifyEmail = (password) => {
     Account.verifyEmail(this.props.match.params.key, password)
       .then(() => this.setState({ isComplete: true }))
-      .catch(error => alert(JSON.stringify(error.response.data, null, 2)));
+      .catch((error) => {
+        if (error.response) {
+          const { response } = error;
+
+          if (response.status === 400) {
+            return this.setState({
+              keyErrors: response.data.key || [],
+              nonFieldErrors: response.data.non_field_errors || [],
+            });
+          } else if (response.status >= 500 && response.status < 500) {
+            return this.setState({
+              nonFieldErrors: ['Unable to process your request. Please try again later.'],
+            });
+          }
+        }
+
+        return Promise.reject(error);
+      });
   };
 
   /**
@@ -35,18 +71,24 @@ class EmailVerificationContainer extends React.Component {
   render() {
     if (this.state.isComplete) {
       return (
-        <React.Fragment>
-          <h1>Email Verified</h1>
-          <p>Your email address has been successfully verified.</p>
-        </React.Fragment>
+        <Container>
+          <Heading>Email Verified</Heading>
+          <p style={{ textAlign: 'center' }}>Your email address has been successfully verified.</p>
+        </Container>
       );
     }
 
+    const { keyErrors, nonFieldErrors } = this.state;
+    const formErrors = [...nonFieldErrors, ...keyErrors];
+
     return (
-      <React.Fragment>
-        <h1>Verify your Email Address</h1>
-        <PasswordForm onSubmit={this.handleVerifyEmail} />
-      </React.Fragment>
+      <Container>
+        <Heading>Verify your Email Address</Heading>
+        <FormContainer>
+          <Message messages={formErrors} />
+          <PasswordForm onSubmit={this.handleVerifyEmail} />
+        </FormContainer>
+      </Container>
     );
   }
 }
