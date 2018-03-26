@@ -7,6 +7,12 @@ import { Container } from '../containers';
 import { Account } from '../services';
 
 
+const FormContainer = styled.div`
+  margin: 0 auto;
+  max-width: 25em;
+`;
+
+
 const Heading = styled.h1`
   color: ${props => props.theme.colors.brandPrimary};
   font-size: ${props => props.theme.fonts.sizes.headings[1]};
@@ -78,8 +84,10 @@ class EmailVerificationContainer extends React.Component {
     return (
       <Container>
         <Heading>Verify your Email Address</Heading>
-        <Message messages={formErrors} />
-        <PasswordForm onSubmit={this.handleVerifyEmail} />
+        <FormContainer>
+          <Message messages={formErrors} />
+          <PasswordForm onSubmit={this.handleVerifyEmail} />
+        </FormContainer>
       </Container>
     );
   }

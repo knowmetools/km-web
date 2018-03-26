@@ -5,12 +5,6 @@ import styled from 'styled-components';
 import { Button } from './';
 
 
-const FormContainer = styled.div`
-  margin: 0 auto;
-  max-width: 25em;
-`;
-
-
 const Input = styled.input`
   border: 1px solid ${props => props.theme.colors.grayAccent};
   border-radius: ${props => props.theme.borderRadius};
@@ -66,22 +60,20 @@ class PasswordForm extends React.Component {
 
   render() {
     return (
-      <FormContainer>
-        <form onSubmit={this.handleSubmit}>
-          <Label htmlFor="password">Password</Label>
-          <Input
-            autoComplete="current-password"
-            autoFocus
-            id="password"
-            name="password"
-            onChange={this.handlePasswordChange}
-            required
-            type="password"
-            value={this.state.password}
-          />
-          <Button type="submit">Submit</Button>
-        </form>
-      </FormContainer>
+      <form onSubmit={this.handleSubmit}>
+        <Label htmlFor="password">Password</Label>
+        <Input
+          autoComplete="current-password"
+          autoFocus
+          id="password"
+          name="password"
+          onChange={this.handlePasswordChange}
+          required
+          type="password"
+          value={this.state.password}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
     );
   }
 }
