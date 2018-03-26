@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components'
 
-import { globalStyles } from './styles';
+import { globalStyles, theme } from './styles';
 import { EmailVerificationContainer } from './containers';
 
 
@@ -9,11 +10,13 @@ const App = () => {
   globalStyles();
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/verify-email/:key" component={EmailVerificationContainer} />
-      </Switch>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/verify-email/:key" component={EmailVerificationContainer} />
+        </Switch>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 };
 

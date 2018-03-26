@@ -1,8 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import styled from 'styled-components';
 
-import { PasswordForm } from '../components';
+import { Message, PasswordForm } from '../components';
+import { Container } from '../containers';
 import { Account } from '../services';
+
+
+const Heading = styled.h1`
+  color: ${props => props.theme.colors.brandPrimary};
+  font-size: ${props => props.theme.fonts.sizes.headings[1]};
+  line-height: 1.25em;
+  margin: .5em 0;
+  text-align: center;
+`;
 
 
 class EmailVerificationContainer extends React.Component {
@@ -54,10 +65,10 @@ class EmailVerificationContainer extends React.Component {
   render() {
     if (this.state.isComplete) {
       return (
-        <React.Fragment>
-          <h1>Email Verified</h1>
-          <p>Your email address has been successfully verified.</p>
-        </React.Fragment>
+        <Container>
+          <Heading>Email Verified</Heading>
+          <p style={{ textAlign: 'center' }}>Your email address has been successfully verified.</p>
+        </Container>
       );
     }
 
@@ -65,15 +76,11 @@ class EmailVerificationContainer extends React.Component {
     const formErrors = [...nonFieldErrors, ...keyErrors];
 
     return (
-      <React.Fragment>
-        <h1>Verify your Email Address</h1>
-        {formErrors.length > 0 && (
-          <ul>
-            {formErrors.map(e => <li key={e}>{e}</li>)}
-          </ul>
-        )}
+      <Container>
+        <Heading>Verify your Email Address</Heading>
+        <Message messages={formErrors} />
         <PasswordForm onSubmit={this.handleVerifyEmail} />
-      </React.Fragment>
+      </Container>
     );
   }
 }
