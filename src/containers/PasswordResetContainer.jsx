@@ -1,8 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import styled from 'styled-components';
 
 import { NewPasswordForm, PageHeader } from '../components';
 import { Container } from './';
+
+
+const FormContainer = styled.div`
+  margin: 0 auto;
+  max-width: 25em;
+`;
 
 
 /**
@@ -28,7 +35,9 @@ class PasswordResetContainer extends React.Component {
     return (
       <Container>
         <PageHeader>Reset your Password</PageHeader>
-        <NewPasswordForm />
+        <FormContainer>
+          <NewPasswordForm />
+        </FormContainer>
       </Container>
     );
   }

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { Button } from './';
+import { Input, Label } from './forms';
 
 
 /**
@@ -28,9 +29,9 @@ class NewPasswordForm extends React.Component {
   render() {
     return (
       <form onSubmit={() => {}}>
-        <label htmlFor="password">
+        <Label htmlFor="password">
           New Password
-          <input
+          <Input
             autoComplete="new-password"
             autoFocus
             id="password"
@@ -40,12 +41,11 @@ class NewPasswordForm extends React.Component {
             type="password"
             value={this.state.password}
           />
-        </label>
-        <label htmlFor="passwordConfirmation">
+        </Label>
+        <Label htmlFor="passwordConfirmation">
           Confirm Password
-          <input
+          <Input
             autoComplete="new-password"
-            autoFocus
             id="passwordConfirmation"
             name="passwordConfirmation"
             onChange={this.handleInputChange}
@@ -53,7 +53,7 @@ class NewPasswordForm extends React.Component {
             type="password"
             value={this.state.passwordConfirmation}
           />
-        </label>
+        </Label>
         <Button type="submit">Reset Password</Button>
       </form>
     );
