@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Button = styled.button`
   background: ${props => props.theme.colors.brandPrimary};
-  border: 0;
+  border: 1px solid ${props => props.theme.colors.brandPrimary};
   border-radius: ${props => props.theme.borderRadius};
   color: white;
   cursor: pointer;
