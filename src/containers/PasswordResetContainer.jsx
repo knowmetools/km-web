@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { NewPasswordForm } from '../components';
+import { NewPasswordForm, PageHeader } from '../components';
 import { Container } from './';
 
 
@@ -27,7 +27,7 @@ class PasswordResetContainer extends React.Component {
   render() {
     return (
       <Container>
-        <h1>Reset your Password</h1>
+        <PageHeader>Reset your Password</PageHeader>
         <NewPasswordForm />
       </Container>
     );

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
-import { Message, PasswordForm } from '../components';
+import { Message, PageHeader, PasswordForm } from '../components';
 import { Container } from '../containers';
 import { Account } from '../services';
 
@@ -10,15 +10,6 @@ import { Account } from '../services';
 const FormContainer = styled.div`
   margin: 0 auto;
   max-width: 25em;
-`;
-
-
-const Heading = styled.h1`
-  color: ${props => props.theme.colors.brandPrimary};
-  font-size: ${props => props.theme.fonts.sizes.headings[1]};
-  line-height: 1.25em;
-  margin: .5em 0;
-  text-align: center;
 `;
 
 
@@ -72,7 +63,7 @@ class EmailVerificationContainer extends React.Component {
     if (this.state.isComplete) {
       return (
         <Container>
-          <Heading>Email Verified</Heading>
+          <PageHeader>Email Verified</PageHeader>
           <p style={{ textAlign: 'center' }}>Your email address has been successfully verified.</p>
         </Container>
       );
@@ -83,7 +74,7 @@ class EmailVerificationContainer extends React.Component {
 
     return (
       <Container>
-        <Heading>Verify your Email Address</Heading>
+        <PageHeader>Verify your Email Address</PageHeader>
         <FormContainer>
           <Message messages={formErrors} />
           <PasswordForm onSubmit={this.handleVerifyEmail} />
