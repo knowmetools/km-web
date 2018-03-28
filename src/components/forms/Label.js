@@ -7,6 +7,11 @@ const Label = styled.label`
   font-weight: bold;
   margin: 1em 0;
   text-transform: uppercase;
+
+  > * {
+    font-weight: normal;
+    text-transform: none;
+  }
 `;
 
 

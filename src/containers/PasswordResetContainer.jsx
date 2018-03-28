@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
-import { NewPasswordForm, PageHeader } from '../components';
+import { Message, NewPasswordForm, PageHeader } from '../components';
+import { Account } from '../services';
 import { Container } from './';
 
 
@@ -27,16 +28,66 @@ class PasswordResetContainer extends React.Component {
     }).isRequired,
   };
 
+  state = {
+    isComplete: false,
+    keyErrors: [],
+    nonFieldErrors: [],
+    passwordErrors: [],
+  };
+
+  /**
+   * Event Handlers
+   */
+
+  handleResetPassword = async (password) => {
+    try {
+      await Account.resetPassword(this.props.match.params.key, password);
+    } catch (error) {
+      if (error.response) {
+        const { response } = error;
+
+        if (response.status === 400) {
+          return this.setState({
+            keyErrors: response.data.key || [],
+            nonFieldErrors: response.data.non_field_errors || [],
+            passwordErrors: response.data.password || [],
+          });
+        } else if (response.status >= 500 && response.status < 600) {
+          return this.setState({
+            nonFieldErrors: ['Unable to process your request. Please try again later.'],
+          });
+        }
+      }
+
+      throw error;
+    }
+
+    return this.setState({ isComplete: true });
+  }
+
   /**
    * Component Methods
    */
 
   render() {
+    if (this.state.isComplete) {
+      return (
+        <Container>
+          <PageHeader>Password Reset</PageHeader>
+          <p style={{ textAlign: 'center' }}>Your password has been reset.</p>
+        </Container>
+      );
+    }
+
+    const { keyErrors, nonFieldErrors, passwordErrors } = this.state;
+    const formErrors = [...nonFieldErrors, ...keyErrors];
+
     return (
       <Container>
         <PageHeader>Reset your Password</PageHeader>
         <FormContainer>
-          <NewPasswordForm />
+          <Message messages={formErrors} />
+          <NewPasswordForm errors={passwordErrors} onSubmit={this.handleResetPassword} />
         </FormContainer>
       </Container>
     );

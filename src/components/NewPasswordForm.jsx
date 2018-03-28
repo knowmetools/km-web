@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { Button } from './';
+import { Button, Message } from './';
 import { Input, Label } from './forms';
 
 
@@ -11,6 +11,15 @@ import { Input, Label } from './forms';
  * Before being submitted, the form ensures that the new password and confirmation are equal.
  */
 class NewPasswordForm extends React.Component {
+  static defaultProps = {
+    errors: [],
+  };
+
+  static propTypes = {
+    errors: PropTypes.arrayOf(PropTypes.string),
+    onSubmit: PropTypes.func.isRequired,
+  };
+
   state = {
     password: '',
     passwordConfirmation: '',
@@ -22,15 +31,24 @@ class NewPasswordForm extends React.Component {
 
   handleInputChange = e => this.setState({ [e.target.name]: e.target.value });
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    this.props.onSubmit(this.state.password);
+  }
+
   /**
    * Component Methods
    */
 
   render() {
     return (
-      <form onSubmit={() => {}}>
+      <form onSubmit={this.handleSubmit}>
         <Label htmlFor="password">
           New Password
+
+          <Message messages={this.props.errors} />
+
           <Input
             autoComplete="new-password"
             autoFocus

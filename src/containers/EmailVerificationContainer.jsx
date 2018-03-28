@@ -44,7 +44,7 @@ class EmailVerificationContainer extends React.Component {
               keyErrors: response.data.key || [],
               nonFieldErrors: response.data.non_field_errors || [],
             });
-          } else if (response.status >= 500 && response.status < 500) {
+          } else if (response.status >= 500 && response.status < 600) {
             return this.setState({
               nonFieldErrors: ['Unable to process your request. Please try again later.'],
             });
