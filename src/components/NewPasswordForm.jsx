@@ -23,23 +23,17 @@ class NewPasswordForm extends React.Component {
   state = {
     password: '',
     passwordConfirmation: '',
+    passwordMatch: true,
   }
 
-  /**
-   * Event Handlers
-   */
-
-  handleInputChange = e => this.setState({ [e.target.name]: e.target.value });
+  handleInputChange = e => this.setState({ [e.target.name]: e.target.value }, () => (
+    this.setState({ passwordMatch: this.state.password === this.state.passwordConfirmation })))
 
   handleSubmit = (e) => {
     e.preventDefault();
 
     this.props.onSubmit(this.state.password);
   }
-
-  /**
-   * Component Methods
-   */
 
   render() {
     return (
@@ -62,6 +56,11 @@ class NewPasswordForm extends React.Component {
         </Label>
         <Label htmlFor="passwordConfirmation">
           Confirm Password
+
+          {!this.state.passwordMatch && (
+            <Message messages={['Passwords do not match.']} />
+          )}
+
           <Input
             autoComplete="new-password"
             id="passwordConfirmation"
@@ -72,7 +71,7 @@ class NewPasswordForm extends React.Component {
             value={this.state.passwordConfirmation}
           />
         </Label>
-        <Button type="submit">Reset Password</Button>
+        <Button disabled={!this.state.passwordMatch} type="submit">Reset Password</Button>
       </form>
     );
   }
