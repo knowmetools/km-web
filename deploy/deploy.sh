@@ -24,13 +24,14 @@ echo "Selecting '$TERRAFORM_WORKSPACE' workspace"
 
 BUCKET=$(
     cd $TERRAFORM_DIR \
-    && terraform workspace select $TERRAFORM_WORKSPACE >/dev/null \
-    && terraform output bucket
+    && TF_WORKSPACE=$TERRAFORM_WORKSPACE terraform output bucket
 )
 
-echo -e "\nFiles will be uploaded to s3://$BUCKET\n"
+echo -e "\nBuilding application..."
+yarn build > /dev/null
+echo -e "Done.\n"
 
-
-yarn build
-
-aws s3 sync --delete build s3://$BUCKET
+echo -e "\nFiles will be uploaded to s3://$BUCKET"
+echo "Uploading files..."
+aws s3 sync --delete build s3://$BUCKET > /dev/null
+echo -e "Done.\n"

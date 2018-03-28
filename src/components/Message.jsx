@@ -12,6 +12,12 @@ const MessageBox = styled.div`
 `;
 
 
+const MessageList = styled.ul`
+  list-style: disc outside;
+  padding-left: 1.5em;
+`;
+
+
 const Message = ({ messages }) => {
   if (messages.length === 0) {
     return null;
@@ -27,9 +33,9 @@ const Message = ({ messages }) => {
 
   return (
     <MessageBox>
-      <ul>
+      <MessageList>
         {messages.map(m => <li key={m}>{m}</li>)}
-      </ul>
+      </MessageList>
     </MessageBox>
   );
 };
