@@ -10,6 +10,12 @@ const Button = styled.button`
   padding: .5em 1em;
   transition: all ease-in-out 200ms
 
+  &:disabled {
+    background: ${props => props.theme.colors.brandPrimaryLight};
+    border-color: ${props => props.theme.colors.brandPrimaryLight};
+    cursor: not-allowed;
+  }
+
   &:hover {
     background: ${props => props.theme.colors.brandPrimaryLight};
   }
