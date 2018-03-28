@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 
 import { Message, NewPasswordForm, PageHeader } from '../components';
@@ -70,26 +71,36 @@ class PasswordResetContainer extends React.Component {
    */
 
   render() {
+    let content;
     if (this.state.isComplete) {
-      return (
+      content = (
         <Container>
           <PageHeader>Password Reset</PageHeader>
           <p style={{ textAlign: 'center' }}>Your password has been reset.</p>
         </Container>
       );
+    } else {
+      const { keyErrors, nonFieldErrors, passwordErrors } = this.state;
+      const formErrors = [...nonFieldErrors, ...keyErrors];
+
+      content = (
+        <Container>
+          <PageHeader>Reset your Password</PageHeader>
+          <FormContainer>
+            <Message messages={formErrors} />
+            <NewPasswordForm errors={passwordErrors} onSubmit={this.handleResetPassword} />
+          </FormContainer>
+        </Container>
+      );
     }
 
-    const { keyErrors, nonFieldErrors, passwordErrors } = this.state;
-    const formErrors = [...nonFieldErrors, ...keyErrors];
-
     return (
-      <Container>
-        <PageHeader>Reset your Password</PageHeader>
-        <FormContainer>
-          <Message messages={formErrors} />
-          <NewPasswordForm errors={passwordErrors} onSubmit={this.handleResetPassword} />
-        </FormContainer>
-      </Container>
+      <React.Fragment>
+        <Helmet>
+          <title>Reset Password</title>
+        </Helmet>
+        {content}
+      </React.Fragment>
     );
   }
 }

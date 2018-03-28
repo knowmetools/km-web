@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 
 import { Message, PageHeader, PasswordForm } from '../components';
@@ -60,26 +61,36 @@ class EmailVerificationContainer extends React.Component {
    */
 
   render() {
+    let content;
     if (this.state.isComplete) {
-      return (
+      content = (
         <Container>
           <PageHeader>Email Verified</PageHeader>
           <p style={{ textAlign: 'center' }}>Your email address has been successfully verified.</p>
         </Container>
       );
+    } else {
+      const { keyErrors, nonFieldErrors } = this.state;
+      const formErrors = [...nonFieldErrors, ...keyErrors];
+
+      content = (
+        <Container>
+          <PageHeader>Verify your Email Address</PageHeader>
+          <FormContainer>
+            <Message messages={formErrors} />
+            <PasswordForm onSubmit={this.handleVerifyEmail} />
+          </FormContainer>
+        </Container>
+      );
     }
 
-    const { keyErrors, nonFieldErrors } = this.state;
-    const formErrors = [...nonFieldErrors, ...keyErrors];
-
     return (
-      <Container>
-        <PageHeader>Verify your Email Address</PageHeader>
-        <FormContainer>
-          <Message messages={formErrors} />
-          <PasswordForm onSubmit={this.handleVerifyEmail} />
-        </FormContainer>
-      </Container>
+      <React.Fragment>
+        <Helmet>
+          <title>Verify your Email</title>
+        </Helmet>
+        {content}
+      </React.Fragment>
     );
   }
 }
