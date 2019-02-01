@@ -8,7 +8,7 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
   padding: .5em 1em;
-  transition: all ease-in-out 200ms
+  transition: all ease-in-out 200ms;
 
   &:disabled {
     background: ${props => props.theme.colors.brandPrimaryLight};

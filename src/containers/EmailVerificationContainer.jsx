@@ -1,17 +1,21 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import {Helmet} from 'react-helmet';
 import styled from 'styled-components';
 
-import { Message, PageHeader, PasswordForm } from '../components';
-import { Container } from '../containers';
-import { Account } from '../services';
+import {Button, Message, PageHeader} from '../components';
+import {Container} from '../containers';
+import {Account} from '../services';
 
 
 const FormContainer = styled.div`
   margin: 0 auto;
   max-width: 25em;
 `;
+
+const VerifyButtonContainer = styled.div`
+  text-align: center;
+`
 
 
 class EmailVerificationContainer extends React.Component {
@@ -33,8 +37,8 @@ class EmailVerificationContainer extends React.Component {
    * Event Handlers
    */
 
-  handleVerifyEmail = (password) => {
-    Account.verifyEmail(this.props.match.params.key, password)
+  handleVerifyEmail = () => {
+    Account.verifyEmail(this.props.match.params.key)
       .then(() => this.setState({ isComplete: true }))
       .catch((error) => {
         if (error.response) {
@@ -78,7 +82,9 @@ class EmailVerificationContainer extends React.Component {
           <PageHeader>Verify your Email Address</PageHeader>
           <FormContainer>
             <Message messages={formErrors} />
-            <PasswordForm onSubmit={this.handleVerifyEmail} />
+            <VerifyButtonContainer>
+              <Button onClick={this.handleVerifyEmail}>Verify</Button>
+            </VerifyButtonContainer>
           </FormContainer>
         </Container>
       );
