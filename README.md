@@ -1,5 +1,7 @@
 # Know Me Web
 
+![Travis CI Status](https://img.shields.io/travis/com/knowmetools/km-web.svg?style=flat)
+
 This is Know Me's web app. It provides account functionality such as email verification and password resets for the Know Me iOS app.
 
 

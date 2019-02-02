@@ -83,7 +83,7 @@ class EmailVerificationContainer extends React.Component {
           <FormContainer>
             <Message messages={formErrors} />
             <VerifyButtonContainer>
-              <Button onClick={this.handleVerifyEmail}>Verify</Button>
+              <Button data-test-id="verify-email-btn" onClick={this.handleVerifyEmail}>Verify</Button>
             </VerifyButtonContainer>
           </FormContainer>
         </Container>

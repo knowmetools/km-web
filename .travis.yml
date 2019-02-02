@@ -1,0 +1,15 @@
+---
+language: node_js
+node_js: node
+
+cache: yarn
+
+script:
+  - yarn start &
+  - yarn run test:integration
+
+# Disable email notifications when a new branch succeeds.
+notifications:
+  email:
+    on_failure: always
+    on_success: never
