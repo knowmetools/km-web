@@ -12,6 +12,7 @@ phases:
       - yarn install
   build:
     commands:
+      - yarn run test:integration
       - yarn build
   post_build:
     commands:
