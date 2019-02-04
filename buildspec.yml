@@ -17,6 +17,8 @@ phases:
       - yarn start &
       - yarn run test:integration
       - yarn build
-  post_build:
-    commands:
-      - aws s3 sync --delete ./build s3://${S3_BUCKET}
+
+artifacts:
+  base-directory: build
+  files:
+    - '**/*'
